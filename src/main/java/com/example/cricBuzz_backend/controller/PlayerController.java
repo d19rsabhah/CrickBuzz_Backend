@@ -6,6 +6,8 @@ import com.example.cricBuzz_backend.dto.response.PlayerResponse;
 import com.example.cricBuzz_backend.model.entity.Player;
 import com.example.cricBuzz_backend.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,12 +18,14 @@ public class PlayerController {
     PlayerService playerService;
 
     @PostMapping
-    public PlayerResponse addPlayer(@RequestBody PlayerRequest playerRequest){
-        return playerService.addPlayer(playerRequest);
+    public ResponseEntity addPlayer(@RequestBody PlayerRequest playerRequest){
+        PlayerResponse addResponse = playerService.addPlayer(playerRequest);
+        return new ResponseEntity(addResponse, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public Player getPlayer(@RequestParam("player-id") int player_Id){
-        return playerService.getPlayer(player_Id);
+    public ResponseEntity getPlayer(@RequestParam("player-id") int player_Id){
+        PlayerResponse getResponse = playerService.getPlayer(player_Id);
+        return new ResponseEntity(getResponse, HttpStatus.OK);
     }
 }

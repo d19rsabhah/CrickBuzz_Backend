@@ -23,15 +23,16 @@ public class PlayerService {
 
         Player savedPlayer = playerRepository.save(player);
 
-        return PlayerConverter.PlayerToPlayerResponse(savedPlayer);
+        return PlayerConverter.playerToPlayerResponse(savedPlayer);
 
     }
 
-    public Player getPlayer(int playerId) {
+    public PlayerResponse getPlayer(int playerId) {
         Optional<Player> playerOptional = playerRepository.findById(playerId);
         if (playerOptional.isEmpty()){
             throw new PlayerNotFoundException("Invalid player id!");
         }
-        return playerOptional.get();
+        Player player = playerOptional.get();
+        return PlayerConverter.playerToPlayerResponse(player);
     }
 }

@@ -28,7 +28,7 @@ public class PlayerConverter {
                 .build();
     }
 
-    public static PlayerResponse PlayerToPlayerResponse(Player player){
+    public static PlayerResponse playerToPlayerResponse(Player player){
         return PlayerResponse.builder()
                 .name(player.getName())
                 .speciality(player.getSpeciality())
