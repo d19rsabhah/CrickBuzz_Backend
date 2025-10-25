@@ -1,6 +1,7 @@
 package com.example.cricBuzz_backend.model.entity;
 
 import com.example.cricBuzz_backend.model.enum_classes.MatchType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -47,5 +48,6 @@ public class Stats {
 
     @OneToOne
     @JoinColumn
+            @JsonIgnore
     Player player;
 }

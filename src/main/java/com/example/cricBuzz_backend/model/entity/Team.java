@@ -1,5 +1,6 @@
 package com.example.cricBuzz_backend.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -25,9 +26,11 @@ public class Team {
     int iccPoints;
 
     @OneToMany(mappedBy = "team")
+            @JsonIgnore
     List<CricketMatch> cricketMatches = new ArrayList<>();
 
     @ManyToMany(mappedBy = "teams")
+            @JsonIgnore
     List<CricketMatch> matches = new ArrayList<>();
 
 }
