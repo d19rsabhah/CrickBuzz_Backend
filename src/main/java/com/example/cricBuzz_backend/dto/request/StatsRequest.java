@@ -1,30 +1,19 @@
-package com.example.cricBuzz_backend.model.entity;
+package com.example.cricBuzz_backend.dto.request;
 
 import com.example.cricBuzz_backend.model.enum_classes.MatchType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Entity
-@Builder
-public class Stats {
+public class StatsRequest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int statsId;
-
-
-    @Enumerated(EnumType.STRING)
     MatchType matchType; // TEST, ODI, T20I, IPL
-
-    // ---- Batting ----
     int matches;
     int ballsBowled;
     int inningsBatted;
@@ -46,10 +35,4 @@ public class Stats {
     int doubleHundreds;
     int fiveWickets;
     int tenWickets;
-
-    @ManyToOne
-    @JoinColumn(name = "player_id")
-    @JsonIgnore
-    private Player player;
-
 }

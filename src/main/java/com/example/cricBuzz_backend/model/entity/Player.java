@@ -4,7 +4,10 @@ import com.example.cricBuzz_backend.model.enum_classes.*;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -65,7 +68,8 @@ public class Player {
     @JoinColumn(nullable = true)
     Team team;
 
-    @OneToOne(mappedBy = "player")
-    Stats stats;
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    private List<Stats> statsList = new ArrayList<>();
+
 
 }
