@@ -31,7 +31,9 @@ public class PlayerRequest {
 
     int jerseyNumber;
 
-    int capNumber;
+    int capNumberTest;
+    int capNumberODI;
+    int capNumberT20;
 
     BattingStyle battingStyle;
 

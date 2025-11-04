@@ -22,9 +22,7 @@ public class Player {
     int playerId;
 
     public String name;
-
     int age;
-
     @Enumerated(EnumType.STRING)
     @Column(length = 10)
     Gender gender;
@@ -43,7 +41,11 @@ public class Player {
 
     int jerseyNumber;
 
-    int capNumber;
+    int capNumberTest;
+
+    int capNumberODI;
+
+    int capNumberT20;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 50)

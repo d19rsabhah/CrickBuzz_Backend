@@ -13,4 +13,5 @@ import lombok.experimental.FieldDefaults;
 public class PlayerResponse {
     String name;
     Specialization speciality;
+    String teamName;
 }

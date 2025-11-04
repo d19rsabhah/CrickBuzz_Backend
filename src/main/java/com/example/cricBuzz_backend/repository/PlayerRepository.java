@@ -1,6 +1,7 @@
 package com.example.cricBuzz_backend.repository;
 
 import com.example.cricBuzz_backend.model.entity.Player;
+import com.example.cricBuzz_backend.model.entity.Team;
 import com.example.cricBuzz_backend.model.enum_classes.Gender;
 import com.example.cricBuzz_backend.model.enum_classes.Specialization;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PlayerRepository extends JpaRepository <Player, Integer>{
@@ -28,5 +30,7 @@ public interface PlayerRepository extends JpaRepository <Player, Integer>{
 //    @Query(value = "SELECT p FROM Player p WHERE p.gender = :gender AND p.speciality = :specialization", nativeQuery = false)
 //    List<Player> findPlayerBasedOnGenderAndSpeciality(@Param("gender") Gender gender,
 //                                                      @Param("specialization") Specialization specialization);
+
+    Optional<Player> findByTeamAndNameAndCapNumberODI(Team team, String playerName, int capNumberODI);
 
 }

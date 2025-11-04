@@ -16,6 +16,7 @@ import java.util.List;
 @Setter
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class CricketMatch {
 
     @Id
@@ -39,7 +40,7 @@ public class CricketMatch {
 
     @ManyToMany
     @JoinTable( name = "match_team",
-    joinColumns = @JoinColumn(name = "match_Id"), // Foreign key for Student
+    joinColumns = @JoinColumn(name = "match_Id"),
     inverseJoinColumns = @JoinColumn(name = "team_Id"))
     List<Team> teams = new ArrayList<>();
 

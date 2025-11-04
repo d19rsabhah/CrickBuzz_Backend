@@ -3,7 +3,6 @@ package com.example.cricBuzz_backend.controller;
 
 import com.example.cricBuzz_backend.dto.request.PlayerRequest;
 import com.example.cricBuzz_backend.dto.response.PlayerResponse;
-import com.example.cricBuzz_backend.model.entity.Player;
 import com.example.cricBuzz_backend.model.enum_classes.Gender;
 import com.example.cricBuzz_backend.model.enum_classes.Specialization;
 import com.example.cricBuzz_backend.service.PlayerService;
@@ -22,8 +21,9 @@ public class PlayerController {
     PlayerService playerService;
 
     @PostMapping
-    public ResponseEntity<?> addPlayer(@RequestBody PlayerRequest playerRequest){
-        PlayerResponse addResponse = playerService.addPlayer(playerRequest);
+    public ResponseEntity<?> addPlayer(@RequestBody PlayerRequest playerRequest,
+                                       @RequestParam("team-id") int teamId) {
+        PlayerResponse addResponse = playerService.addPlayer(playerRequest, teamId);
         return new ResponseEntity<>(addResponse, HttpStatus.CREATED);
     }
 
@@ -32,39 +32,6 @@ public class PlayerController {
         PlayerResponse getResponse = playerService.getPlayer(player_Id);
         return new ResponseEntity<>(getResponse, HttpStatus.OK);
     }
-
-//    @GetMapping("/gender/{gender}")
-//    public ResponseEntity<?> getPlayerByGender(@PathVariable("gender") String genderStr) {
-//        try {
-//            Gender gender = Gender.valueOf(genderStr.toUpperCase());
-//            List<PlayerResponse> players = playerService.getPlayerByGender(gender);
-//
-//            if (players.isEmpty()) {
-//                return new ResponseEntity<>("No Data Found", HttpStatus.NO_CONTENT);
-//            }
-//            return new ResponseEntity<>(players, HttpStatus.OK);
-//
-//        } catch (IllegalArgumentException e) {
-//            return new ResponseEntity<>("Invalid gender. Allowed values: MALE, FEMALE.", HttpStatus.BAD_REQUEST);
-//        }
-//    }
-//
-//    @GetMapping("/gender/{gender}/speciality/{speciality}")
-//    public ResponseEntity<?> getPlayerByGenderAndSpeciality(@PathVariable("gender") String gender,
-//                                                            @PathVariable("speciality") String specialization){
-//        try {
-//
-//            List<PlayerResponse> players = playerService.getPlayerByGenderAndSpeciality(gender.toUpperCase(), specialization.toUpperCase());
-//
-//            if (players.isEmpty()) {
-//                return new ResponseEntity<>("No Data Found", HttpStatus.NO_CONTENT);
-//            }
-//            return new ResponseEntity<>(players, HttpStatus.OK);
-//
-//        } catch (IllegalArgumentException e) {
-//            return new ResponseEntity<>("Invalid input!", HttpStatus.BAD_REQUEST);
-//        }
-//    }
 
     @GetMapping("/gender/{gender}")
     public ResponseEntity<?> getPlayerByGender(@PathVariable("gender") String genderStr) {

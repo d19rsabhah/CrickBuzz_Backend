@@ -4,11 +4,14 @@ import com.example.cricBuzz_backend.converter.PlayerConverter;
 import com.example.cricBuzz_backend.dto.request.PlayerRequest;
 import com.example.cricBuzz_backend.dto.response.PlayerResponse;
 import com.example.cricBuzz_backend.exception.DataNotFoundException;
+import com.example.cricBuzz_backend.exception.DuplicatePlayerException;
 import com.example.cricBuzz_backend.exception.PlayerNotFoundException;
 import com.example.cricBuzz_backend.model.entity.Player;
+import com.example.cricBuzz_backend.model.entity.Team;
 import com.example.cricBuzz_backend.model.enum_classes.Gender;
 import com.example.cricBuzz_backend.model.enum_classes.Specialization;
 import com.example.cricBuzz_backend.repository.PlayerRepository;
+import com.example.cricBuzz_backend.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,15 +25,30 @@ public class PlayerService {
     @Autowired
     PlayerRepository playerRepository;
 
-    public PlayerResponse addPlayer(PlayerRequest playerRequest) {
+    @Autowired
+    TeamRepository teamRepository;
+
+    public PlayerResponse addPlayer(PlayerRequest playerRequest, int teamId) {
+
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new DataNotFoundException("Team not found with ID: " + teamId));
+
+        Optional<Player> existingPlayer = playerRepository.findByTeamAndNameAndCapNumberODI(
+                team, playerRequest.getName(), playerRequest.getCapNumberODI());
+
+        if (existingPlayer.isPresent()) {
+            throw new DuplicatePlayerException("Player already exists for this team with the same ODI cap number!");
+        }
 
         Player player = PlayerConverter.playerRequestToPlayer(playerRequest);
+        player.setTeam(team);
 
         Player savedPlayer = playerRepository.save(player);
 
         return PlayerConverter.playerToPlayerResponse(savedPlayer);
-
     }
+
+
 
     public PlayerResponse getPlayer(int playerId) {
         Optional<Player> playerOptional = playerRepository.findById(playerId);

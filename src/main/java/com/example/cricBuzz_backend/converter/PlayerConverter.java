@@ -17,7 +17,9 @@ public class PlayerConverter {
                 .speciality(playerRequest.getSpeciality())
                 .role(playerRequest.getRole())
                 .jerseyNumber(playerRequest.getJerseyNumber())
-                .capNumber(playerRequest.getCapNumber())
+                .capNumberT20(playerRequest.getCapNumberT20())
+                .capNumberODI(playerRequest.getCapNumberODI())
+                .capNumberTest(playerRequest.getCapNumberTest())
                 .battingStyle(playerRequest.getBattingStyle())
                 .bowlingStyle(playerRequest.getBowlingStyle())
                 .debutDate(playerRequest.getDebutDate())
@@ -32,6 +34,7 @@ public class PlayerConverter {
         return PlayerResponse.builder()
                 .name(player.getName())
                 .speciality(player.getSpeciality())
+                .teamName(player.getTeam().getTeamName())
                 .build();
 
     }
