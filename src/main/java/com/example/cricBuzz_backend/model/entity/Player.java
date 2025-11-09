@@ -22,6 +22,9 @@ public class Player {
     int playerId;
 
     public String name;
+
+    String email;
+
     int age;
     @Enumerated(EnumType.STRING)
     @Column(length = 10)

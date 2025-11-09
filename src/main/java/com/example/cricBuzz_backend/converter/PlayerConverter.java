@@ -10,6 +10,7 @@ public class PlayerConverter {
 
         return Player.builder()
                 .name(playerRequest.getName())
+                .email(playerRequest.getEmail())
                 .age(playerRequest.getAge())
                 .gender(playerRequest.getGender())
                 .height(playerRequest.getHeight())

@@ -23,6 +23,7 @@ public class PlayerController {
     @PostMapping
     public ResponseEntity<?> addPlayer(@RequestBody PlayerRequest playerRequest,
                                        @RequestParam("team-id") int teamId) {
+
         PlayerResponse addResponse = playerService.addPlayer(playerRequest, teamId);
         return new ResponseEntity<>(addResponse, HttpStatus.CREATED);
     }

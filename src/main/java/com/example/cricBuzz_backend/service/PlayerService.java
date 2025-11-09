@@ -13,6 +13,8 @@ import com.example.cricBuzz_backend.model.enum_classes.Specialization;
 import com.example.cricBuzz_backend.repository.PlayerRepository;
 import com.example.cricBuzz_backend.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,6 +30,9 @@ public class PlayerService {
     @Autowired
     TeamRepository teamRepository;
 
+    @Autowired
+    JavaMailSender javaMailSender;
+
     public PlayerResponse addPlayer(PlayerRequest playerRequest, int teamId) {
 
         Team team = teamRepository.findById(teamId)
@@ -42,12 +47,25 @@ public class PlayerService {
 
         Player player = PlayerConverter.playerRequestToPlayer(playerRequest);
         player.setTeam(team);
-
         Player savedPlayer = playerRepository.save(player);
+
+        sendEmail(savedPlayer);
 
         return PlayerConverter.playerToPlayerResponse(savedPlayer);
     }
 
+    private void sendEmail(Player savedPlayer) {
+
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+
+        String salutation = "Dear " + savedPlayer.getName() + ",/n your details have been added to the crickbuzz application. Your Id is " + savedPlayer.getPlayerId();
+        mailMessage.setTo(savedPlayer.getEmail());
+        mailMessage.setSubject("Registration Successfull");
+        mailMessage.setText(salutation);
+        mailMessage.setFrom("rupsa009@yahoo.com");
+
+        javaMailSender.send(mailMessage);
+    }
 
 
     public PlayerResponse getPlayer(int playerId) {

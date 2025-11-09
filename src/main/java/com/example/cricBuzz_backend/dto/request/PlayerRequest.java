@@ -19,6 +19,8 @@ public class PlayerRequest {
 
     int age;
 
+    String email;
+
     Gender gender;
 
     double height;
